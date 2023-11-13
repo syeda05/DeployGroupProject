@@ -2,7 +2,8 @@ import firebase_admin
 from firebase_admin import credentials, firestore
 
 class Recipe:
-    def __init__(self, recipeName, ingredients, instructions, category, rating  ):
+    def __init__(self, id, recipeName, ingredients, instructions, category, rating  ):
+         self.id = id
          self.recipeName = recipeName
          self.ingredients = ingredients
          self.instruction = instructions
