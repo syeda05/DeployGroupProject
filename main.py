@@ -11,7 +11,7 @@ class Recipe:
          self.rating = rating
 
 class RecipeManagmentSystem:
-    def _init_(self, db_name = 'recipes'):
+    def __init__(self, db_name = 'recipes'):
         cred = credentials.Certificate("key.json")
         firebase_admin.initialize_app(cred)
         self.db = firestore.client()
