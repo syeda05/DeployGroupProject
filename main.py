@@ -1,5 +1,6 @@
 import firebase_admin
 from firebase_admin import credentials, firestore
+import random
 
 class Recipe:
     def __init__(self, id, recipeName, ingredients, instructions, category, rating  ):
@@ -11,7 +12,7 @@ class Recipe:
          self.rating = rating
 
 class RecipeManagmentSystem:
-    def _init_(self, db_name = 'recipes'):
+    def __init__(self, db_name = 'recipes'):
         cred = credentials.Certificate("key.json")
         firebase_admin.initialize_app(cred)
         self.db = firestore.client()
@@ -35,6 +36,15 @@ class RecipeManagmentSystem:
                 print("Function for Viewing Recipe will be called")
             elif userInput == '2':
                 print("Function for Adding Recipe will be called")
+                id = random.randint(0,200)
+                name = input('Enter recipe name: ')
+                ing = input('Enter recipe ingredients (Separate values by ,): ')
+                ins = input('Enter recipe instructions: ')
+                category = input('Enter recipe category: ')
+                rating = input('Enter recipe rating: ')
+                recipe = Recipe(str(id), name, ing, ins, category, rating)
+                self.addRecipe(recipe)
+
             elif userInput == '3':
                 print("Function for Editing Recipe will be called")
             elif userInput == '4':
@@ -46,6 +56,12 @@ class RecipeManagmentSystem:
             print("-----------------------------------------------")
             print("Error: The number should be between 1 to 5 inclusively")
             self.selectOptions()
+
+    def addRecipe(self,recipe):
+        recipe_dic ={"id":recipe.id,"name": recipe.recipeName, "ingredient": recipe.ingredients, "instruction": recipe.instruction, 'category': recipe.category, 'rating': recipe.rating}
+
+        self.collection.document(recipe.id).set(recipe_dic)
+        print('Recipe added successfully!')
 
 r = RecipeManagmentSystem()
 r.selectOptions()
