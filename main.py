@@ -35,21 +35,39 @@ class RecipeManagmentSystem:
             if userInput == '1':
                 print("Function for Viewing Recipe will be called")
             elif userInput == '2':
-                num = random.randint(0,200)
+                num = random.randint(0,200)   #generate random number for id
                 while self.collection.document(str(num)).get().exists:
                     num = random.randint(0,200)
                 id = str(num)
+
                 name = input('Enter recipe name: ')
-                while True:
+                while name == '' or name.isdigit():
+                    print("Invalid input. Please enter a recipe name.")
                     name = input('Enter recipe name: ')
-                    if name.strip(): 
-                        break
-                    else:
-                        print("Invalid input. Please enter a recipe name.")
+         
                 ing = input('Enter recipe ingredients (Separate values by ,): ')
+                while ing == '' or ing.isdigit():
+                    print("Invalid input. Please enter ingredients.")
+                    ing = input('Enter recipe ingredients (Separate values by ,): ')
+                ing = ing.split(',')
+                
+                
                 ins = input('Enter recipe instructions: ')
-                category = input('Enter recipe category: ')
+                while ins == '' or ins.isdigit():
+                    print("Invalid input. Please enter recipe instructions.")
+                    ins = input('Enter recipe instructions: ')
+
+                category = input('Enter recipe category (Breakfast, Lunch, or Dinner): ')
+                while category == '' or category.isdigit() or category.lower() not in ['breakfast','lunch','dinner']:
+                    print("Invalid input. Please enter recipe category.")
+                    category = input('Enter recipe category: ')
+
                 rating = input('Enter recipe rating: ')
+
+                while not rating.isdigit() or (int(rating)<1 or int(rating)>5) :
+                    print("Invalid input. Please enter recipe rating.")
+                    rating = input('Enter recipe rating: ')
+
                 recipe = Recipe(id, name, ing, ins, category, rating)
                 self.addRecipe(recipe)
 
