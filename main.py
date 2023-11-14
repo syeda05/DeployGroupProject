@@ -35,14 +35,22 @@ class RecipeManagmentSystem:
             if userInput == '1':
                 print("Function for Viewing Recipe will be called")
             elif userInput == '2':
-                print("Function for Adding Recipe will be called")
-                id = random.randint(0,200)
+                num = random.randint(0,200)
+                while self.collection.document(str(num)).get().exists:
+                    num = random.randint(0,200)
+                id = str(num)
                 name = input('Enter recipe name: ')
+                while True:
+                    name = input('Enter recipe name: ')
+                    if name.strip(): 
+                        break
+                    else:
+                        print("Invalid input. Please enter a recipe name.")
                 ing = input('Enter recipe ingredients (Separate values by ,): ')
                 ins = input('Enter recipe instructions: ')
                 category = input('Enter recipe category: ')
                 rating = input('Enter recipe rating: ')
-                recipe = Recipe(str(id), name, ing, ins, category, rating)
+                recipe = Recipe(id, name, ing, ins, category, rating)
                 self.addRecipe(recipe)
 
             elif userInput == '3':
