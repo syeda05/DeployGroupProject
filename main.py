@@ -1,3 +1,4 @@
+import sys
 import firebase_admin
 from firebase_admin import credentials, firestore
 import random
@@ -86,6 +87,27 @@ class RecipeManagmentSystem:
             print("-----------------------------------------------")
             print("Error: The number should be between 1 to 5 inclusively")
             self.selectOptions()
+
+    def view_recipe(self):
+        print("1-View all")
+        print("2-Breakfast")
+        print("3-Lunch")
+        print("4-Dinner")
+        user_Input = (input("Please select from the above option:"))
+        while user_Input.isdigit() == False:
+            print("please select from the above option.")
+        if user_Input == '1':
+            print("All recipes will be displayed.")
+            docs = self.collection.get()
+            for view_recipe in docs:
+                print(view_recipe.to_dict())
+            yes_input = (input("say yes if you want to stay in this category or not exit: "))
+            if yes_input.islower() == 'yes':
+                self.selectOptions()
+            else:
+                sys.exit()
+        elif user_Input == '2':
+            print("Breakfast menu will be shown.")
     def deleteRecipe(self, userInput):
         
         while not self.collection.document(userInput).get().exists:
@@ -148,3 +170,4 @@ class RecipeManagmentSystem:
 
 r = RecipeManagmentSystem()
 r.selectOptions()
+r.view_recipe()
