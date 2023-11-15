@@ -108,6 +108,10 @@ class RecipeManagmentSystem:
                 sys.exit()
         elif user_Input == '2':
             print("Breakfast menu will be shown.")
+            break_docs = self.collection.where("category", "==", "Breakfast").get()
+            for recipe_break in break_docs:
+                print(recipe_break.to_dict())
+
     def deleteRecipe(self, userInput):
         
         while not self.collection.document(userInput).get().exists:
