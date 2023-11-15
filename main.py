@@ -111,6 +111,18 @@ class RecipeManagmentSystem:
             break_docs = self.collection.where("category", "==", "Breakfast").get()
             for recipe_break in break_docs:
                 print(recipe_break.to_dict())
+        elif user_Input == '3':
+            print("Lunch menu will be displayed.")
+            lunch_docs = self.collection.where("category", "==", "Lunch").get()
+            for lunches in lunch_docs:
+                print(lunches.to_dict())
+        elif user_Input == '4':
+            print("Dinner menu will be displayed.")
+            dinner_docs = self.collection.where("category", "==", "Dinner").get()
+            for dinner in dinner_docs:
+                print(dinner.to_dict())
+        
+
 
     def deleteRecipe(self, userInput):
         
