@@ -72,7 +72,10 @@ class RecipeManagmentSystem:
                 self.addRecipe(recipe)
 
             elif userInput == '3':
-                print("Function for Editing Recipe will be called")
+                #display all the recipes with the viewRecipes function
+                id=input("Enter the ID number of the recipe you want to edit :")
+                self.editRecipe(id)
+                
             elif userInput == '4':
                 userInput=input("Enter the ID number of the record you want to delete :")
                 self.deleteRecipe(userInput)
@@ -107,6 +110,41 @@ class RecipeManagmentSystem:
 
         self.collection.document(recipe.id).set(recipe_dic)
         print('Recipe added successfully!')
+    
+    def editRecipe(self, id):
+        while id.isdigit()==False:
+            id=input("Enter the ID number of the recipe you want to edit :")
+
+        print('Recipe Fields:')
+        print("1- Name")
+        print("2- Ingredients")
+        print("3- Instructions")
+        print("4- Category")
+        print("5- Rating")
+        print("6- Exit")
+
+        option=(input("Select the recipe field you want to edit (Enter a number between 1 and 6): "))
+        
+        while not option.isdigit() or (int(option)<1 or int(option)>6) :
+            print("Invalid input. Please select a valid recipe field.")
+            option = input('Select the recipe field you want to edit (Enter a number between 1 and 6): ')
+    
+        if option == '1':
+            name= input("Enter recipe name: ")
+            while name == '' or name.isdigit():
+                    print("Invalid input. Please enter a recipe name.")
+                    name = input('Enter recipe name: ')
+        
+        elif option == '2':
+            ing = input('Enter recipe ingredients (Separate values by ,): ')
+            while ing == '' or ing.isdigit():
+                print("Invalid input. Please enter ingredients.")
+                ing = input('Enter recipe ingredients (Separate values by ,): ')
+            ing = ing.split(',')
+
+    
+        elif option == '6':
+            self.selectOptions()
 
 r = RecipeManagmentSystem()
 r.selectOptions()
