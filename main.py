@@ -1,3 +1,4 @@
+import sys
 import firebase_admin
 from firebase_admin import credentials, firestore
 
@@ -10,11 +11,12 @@ class Recipe:
          self.rating = rating
 
 class RecipeManagmentSystem:
-    def _init_(self, db_name = 'recipes'):
+    def __init__(self, db_name = 'recipes'):
         cred = credentials.Certificate("key.json")
         firebase_admin.initialize_app(cred)
         self.db = firestore.client()
         self.collection = self.db.collection(db_name)
+     
 
     def selectOptions(self):
         print('Recipe Management System')
@@ -44,7 +46,21 @@ class RecipeManagmentSystem:
         else:
             print("-----------------------------------------------")
             print("Error: The number should be between 1 to 5 inclusively")
+
             self.selectOptions()
+  
+
+
+        
+
+
+
+        
+
+
+
+
+       
 
 r = RecipeManagmentSystem()
 r.selectOptions()
