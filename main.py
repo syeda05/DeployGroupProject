@@ -2,6 +2,7 @@ import sys
 import firebase_admin
 from firebase_admin import credentials, firestore
 import random
+from collections import OrderedDict
 
 class Recipe:
     def __init__(self, id, recipeName, ingredients, instructions, category, rating  ):
@@ -34,7 +35,7 @@ class RecipeManagmentSystem:
         
         if int(userInput)>=1 and int(userInput)<=5:
             if userInput == '1':
-                print("Function for Viewing Recipe will be called")
+                self.view_recipe()
             elif userInput == '2':
                 num = random.randint(0,200)   #generate random number for id
                 while self.collection.document(str(num)).get().exists:
@@ -99,8 +100,27 @@ class RecipeManagmentSystem:
         if user_Input == '1':
             print("All recipes will be displayed.")
             docs = self.collection.get()
+            lists = []
             for view_recipe in docs:
-                print(view_recipe.to_dict())
+                
+                data_view = view_recipe
+                result_view = {
+                    'id':data_view.get('id'),
+                    'name':data_view.get('name'),
+                    'category':data_view.get('category'),
+                    'rating':data_view.get('rating'),
+                    'ingredient':data_view.get('ingredient'),
+                    'instruction':data_view.get('instruction'),
+
+                }
+
+                lists.append(result_view)
+            for result_view in lists:
+                for key, value in result_view.items():
+                    print(f'{key}: {value}')
+                print("\n")
+
+
             yes_input = (input("say yes if you want to stay in this category or not exit: "))
             if yes_input.islower() == 'yes':
                 self.selectOptions()
@@ -111,23 +131,78 @@ class RecipeManagmentSystem:
             break_docs = self.collection.where("category", "==", "Breakfast").get()
             list =[]
             for recipe_break in break_docs:
-                list.append(recipe_break.to_dict())
-            for rec in list:
-                print(rec, "\n")
+                data_all = recipe_break
+
+                total = {
+                    'id': data_all.get('id'),
+                    'name': data_all.get('name'),
+                    'category': data_all.get('category'),
+                    'rating': data_all.get('rating'),
+                    'ingredient': data_all.get('ingredient'),
+                    'instruction': data_all.get('instruction')
+
+                }
+                list.append(total)
+            for total in list:
+                for key, value in total.items():
+                    print(f'{key}: {value}')
+                print("\n")
+              
+
+                
+            
             
         elif user_Input == '3':
+            lunchList=[]
             print("Lunch menu will be displayed.")
             lunch_docs = self.collection.where("category", "==", "Lunch").get()
             for lunches in lunch_docs:
-                datas = lunches.to_dict()
-                items = datas.items()
-                convert_to_str = str(items)
-                print(convert_to_str, "\n \n")
+                datas = lunches
+                
+
+                result = {
+                    'id':datas.get('id'),
+                    'name':datas.get('name'),
+                    'category':datas.get('category'),
+                    'rating':datas.get('rating'),
+                    'ingredient':datas.get('ingredient'),
+                    'instruction':datas.get('instruction')
+
+                }
+
+                lunchList.append(result)
+            for result in lunchList:
+                for key, value in result.items():
+                    print(f'{key}: {value}')
+                print("\n")
+              
+                 
+                    #print(f'{key}:{value}',"\n")
+                # print("------------------------------------------------------------------------------------")
         elif user_Input == '4':
             print("Dinner menu will be displayed.")
             dinner_docs = self.collection.where("category", "==", "Dinner").get()
+            list_d = []
             for dinner in dinner_docs:
-                print(dinner.to_dict())
+                data_d = dinner
+               
+
+                results_t = {
+                    'id':data_d.get('id'),
+                    'name':data_d.get('name'),
+                    'category':data_d.get('category'),
+                    'rating':data_d.get('rating'),
+                    'ingredient':data_d.get('ingredient'),
+                    'instruction':data_d.get('instruction'),
+
+                }
+                list_d.append(results_t)
+            for result_t in list_d:
+                for key, value in result_t.items():
+                    print(f'{key}: {value}')
+                print("\n")
+
+
         
 
 
@@ -193,4 +268,3 @@ class RecipeManagmentSystem:
 
 r = RecipeManagmentSystem()
 r.selectOptions()
-r.view_recipe()
