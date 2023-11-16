@@ -135,13 +135,24 @@ class RecipeManagmentSystem:
                 self.selectOptions()
                
         verification= input("Are you sure you want to delete the record (Type yes or no)?")
+
         if verification.lower()=='yes':
              self.collection.document(userInput).delete()
              print('The record has been deleted sucessfully')
-             self.selectOptions()
+             confirmation=input("Do you want to select another recipe option?")
              
+             if confirmation.lower()=='yes':
+                 self.selectOptions()                
+             else:
+                 print('redirect to exit the function')          
         else:
-            self.selectOptions()
+             confirmation2=input("Do you want to select another option?")
+             
+             if confirmation2.lower()=='yes':
+                 self.selectOptions()
+                
+             else:
+                 print('redirect to exit the function')       
 
     def addRecipe(self,recipe):
         recipe_dic ={"id":recipe.id,"name": recipe.recipeName, "ingredient": recipe.ingredients, "instruction": recipe.instruction, 'category': recipe.category, 'rating': recipe.rating}
@@ -186,4 +197,3 @@ class RecipeManagmentSystem:
 
 r = RecipeManagmentSystem()
 r.selectOptions()
-r.view_recipe()
