@@ -109,13 +109,20 @@ class RecipeManagmentSystem:
         elif user_Input == '2':
             print("Breakfast menu will be shown.")
             break_docs = self.collection.where("category", "==", "Breakfast").get()
+            list =[]
             for recipe_break in break_docs:
-                print(recipe_break.to_dict())
+                list.append(recipe_break.to_dict())
+            for rec in list:
+                print(rec, "\n")
+            
         elif user_Input == '3':
             print("Lunch menu will be displayed.")
             lunch_docs = self.collection.where("category", "==", "Lunch").get()
             for lunches in lunch_docs:
-                print(lunches.to_dict())
+                datas = lunches.to_dict()
+                items = datas.items()
+                convert_to_str = str(items)
+                print(convert_to_str, "\n \n")
         elif user_Input == '4':
             print("Dinner menu will be displayed.")
             dinner_docs = self.collection.where("category", "==", "Dinner").get()
