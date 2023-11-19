@@ -62,7 +62,7 @@ class RecipeManagmentSystem:
                 category = input('Enter recipe category (Breakfast, Lunch, or Dinner): ')
                 while category == '' or category.isdigit() or category.lower() not in ['breakfast','lunch','dinner']:
                     print("Invalid input. Please enter recipe category.")
-                    category = input('Enter recipe category: ')
+                    category = input('Enter recipe category (Breakfast, Lunch, or Dinner): ')
 
                 rating = input('Enter recipe rating: ')
 
@@ -226,13 +226,24 @@ class RecipeManagmentSystem:
                 self.selectOptions()
                
         verification= input("Are you sure you want to delete the record (Type yes or no)?")
+
         if verification.lower()=='yes':
              self.collection.document(userInput).delete()
              print('The record has been deleted sucessfully')
-             self.selectOptions()
+             confirmation=input("Do you want to select another recipe option?")
              
+             if confirmation.lower()=='yes':
+                 self.selectOptions()                
+             else:
+                 print('redirect to exit the function')          
         else:
-            self.selectOptions()
+             confirmation2=input("Do you want to select another option?")
+             
+             if confirmation2.lower()=='yes':
+                 self.selectOptions()
+                
+             else:
+                 print('redirect to exit the function')       
 
     def addRecipe(self,recipe):
         recipe_dic ={"id":recipe.id,"name": recipe.recipeName, "ingredient": recipe.ingredients, "instruction": recipe.instruction, 'category': recipe.category, 'rating': recipe.rating}
@@ -261,19 +272,74 @@ class RecipeManagmentSystem:
         if option == '1':
             name= input("Enter recipe name: ")
             while name == '' or name.isdigit():
-                    print("Invalid input. Please enter a recipe name.")
-                    name = input('Enter recipe name: ')
-        
+                print("Invalid input. Please enter a recipe name.")
+                name = input('Enter recipe name: ')
+            verification= input("Are you sure you want to update the record (Type yes or no)?")
+            if verification.lower()=='yes':
+                self.collection.document(id).update({'name':name})
+                print("Recipe name updated successfully!")
+            else:
+                self.selectOptions()
+
         elif option == '2':
             ing = input('Enter recipe ingredients (Separate values by ,): ')
             while ing == '' or ing.isdigit():
                 print("Invalid input. Please enter ingredients.")
                 ing = input('Enter recipe ingredients (Separate values by ,): ')
             ing = ing.split(',')
+            verification= input("Are you sure you want to update the record (Type yes or no)?")
+            if verification.lower()=='yes':
+                self.collection.document(id).update({'ingredient':ing})
+                print("Recipe ingredients updated successfully!")
+            else:
+                self.selectOptions()
+        
+        elif option == '3':
+            ins = input('Enter recipe instructions: ')
+            while ins == '' or ins.isdigit():
+                print("Invalid input. Please enter recipe instructions.")
+                ins = input('Enter recipe instructions: ')
+            verification= input("Are you sure you want to update the record (Type yes or no)?")
+            if verification.lower()=='yes':
+                self.collection.document(id).update({'instruction':ins})
+                print("Recipe instructions updated successfully!")
+            else:
+                self.selectOptions()
 
-    
+        elif option == '4':
+            category = input('Enter recipe category (Breakfast, Lunch, or Dinner): ')
+            while category == '' or category.isdigit() or category.lower() not in ['breakfast','lunch','dinner']:
+                print("Invalid input. Please enter recipe category.")
+                category = input('Enter recipe category (Breakfast, Lunch, or Dinner): ')
+            verification= input("Are you sure you want to update the record (Type yes or no)?")
+            if verification.lower()=='yes':
+                self.collection.document(id).update({'category':category})
+                print("Recipe category updated successfully!")
+            else:
+                self.selectOptions()
+
+
+        
+        elif option == '5':
+            rating = input('Enter recipe rating: ')
+            while not rating.isdigit() or (int(rating)<1 or int(rating)>5) :
+                print("Invalid input. Please enter recipe rating.")
+                rating = input('Enter recipe rating: ')
+            verification= input("Are you sure you want to update the record (Type yes or no)?")
+            if verification.lower()=='yes':
+                self.collection.document(id).update({'rating':rating})
+                print("Recipe rating updated successfully!")
+            else:
+                self.selectOptions()
+            
         elif option == '6':
             self.selectOptions()
+        
+        confirmation = input("Do you want to select another recipe option (Type yes or no)? ")
+        if confirmation.lower() == 'yes':
+            self.selectOptions()
+        else:
+            print("redirect to exit the function")
    
 
 r = RecipeManagmentSystem()
