@@ -122,10 +122,10 @@ class RecipeManagmentSystem:
 
 
             yes_input = (input("say yes if you want to stay in this category or not exit: "))
-            if yes_input.islower() == 'yes':
+            if yes_input.lower() == 'yes':
                 self.selectOptions()
             else:
-                sys.exit()
+                self.exit_recipe()
         elif user_Input == '2':
             print("Breakfast menu will be shown.")
             break_docs = self.collection.where("category", "==", "Breakfast").get()
@@ -157,6 +157,7 @@ class RecipeManagmentSystem:
             print("Lunch menu will be displayed.")
             lunch_docs = self.collection.where("category", "==", "Lunch").get()
             for lunches in lunch_docs:
+                
                 datas = lunches
                 
 
@@ -201,6 +202,12 @@ class RecipeManagmentSystem:
                 for key, value in result_t.items():
                     print(f'{key}: {value}')
                 print("\n")
+
+            yes_input = (input("say yes if you want to stay in this category or else exit: "))
+            if yes_input.islower() == 'yes':
+                self.selectOptions()
+            else:
+                self.exit_recipe()
 
 
         
@@ -331,6 +338,10 @@ class RecipeManagmentSystem:
             self.selectOptions()
         else:
             print("redirect to exit the function")
+
+
+    def exit_recipe(self):
+        return sys.exit()
 
             
    
