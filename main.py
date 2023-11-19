@@ -121,7 +121,7 @@ class RecipeManagmentSystem:
                 print("\n")
 
 
-            yes_input = (input("say yes if you want to stay in this category or not exit: "))
+            yes_input = (input("say yes if you want to go to main option or not exit: "))
             if yes_input.lower() == 'yes':
                 self.selectOptions()
             else:
@@ -147,6 +147,11 @@ class RecipeManagmentSystem:
                 for key, value in total.items():
                     print(f'{key}: {value}')
                 print("\n")
+            yes_input = (input("say yes if you want to go to main option or else exit: "))
+            if yes_input.lower() == 'yes':
+                self.selectOptions()
+            else:
+                self.exit_recipe()
               
 
                 
@@ -176,6 +181,11 @@ class RecipeManagmentSystem:
                 for key, value in result.items():
                     print(f'{key}: {value}')
                 print("\n")
+            yes_input = (input("say yes if you want to go to main option or else exit: "))
+            if yes_input.lower() == 'yes':
+                self.selectOptions()
+            else:
+                self.exit_recipe()
               
                  
                     #print(f'{key}:{value}',"\n")
@@ -203,7 +213,7 @@ class RecipeManagmentSystem:
                     print(f'{key}: {value}')
                 print("\n")
 
-            yes_input = (input("say yes if you want to stay in this category or else exit: "))
+            yes_input = (input("say yes if you want to go to main option or else exit: "))
             if yes_input.islower() == 'yes':
                 self.selectOptions()
             else:
@@ -233,7 +243,7 @@ class RecipeManagmentSystem:
              if confirmation.lower()=='yes':
                  self.selectOptions()                
              else:
-                 print('redirect to exit the function')          
+                self.exit_recipe()
         else:
              confirmation2=input("Do you want to select another option?")
              
@@ -241,7 +251,7 @@ class RecipeManagmentSystem:
                  self.selectOptions()
                 
              else:
-                 print('redirect to exit the function')       
+                 self.exit_recipe()      
 
     def addRecipe(self,recipe):
         recipe_dic ={"id":recipe.id,"name": recipe.recipeName, "ingredient": recipe.ingredients, "instruction": recipe.instruction, 'category': recipe.category, 'rating': recipe.rating}
@@ -337,7 +347,7 @@ class RecipeManagmentSystem:
         if confirmation.lower() == 'yes':
             self.selectOptions()
         else:
-            print("redirect to exit the function")
+            self.exit_recipe()
 
 
     def exit_recipe(self):
