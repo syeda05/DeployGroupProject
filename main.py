@@ -124,8 +124,7 @@ class RecipeManagmentSystem:
             yes_input = (input("say yes if you want to stay in this category or not exit: "))
             if yes_input.islower() == 'yes':
                 self.selectOptions()
-            else:
-                sys.exit()
+           
         elif user_Input == '2':
             print("Breakfast menu will be shown.")
             break_docs = self.collection.where("category", "==", "Breakfast").get()
@@ -147,6 +146,10 @@ class RecipeManagmentSystem:
                 for key, value in total.items():
                     print(f'{key}: {value}')
                 print("\n")
+
+            yes_input = (input("say yes if you want to stay in this category or not exit: "))
+            if yes_input.islower() == 'yes':
+                self.selectOptions()
               
 
                 
@@ -175,6 +178,9 @@ class RecipeManagmentSystem:
                 for key, value in result.items():
                     print(f'{key}: {value}')
                 print("\n")
+            yes_input = (input("say yes if you want to stay in this category or not exit: "))
+            if yes_input.islower() == 'yes':
+                self.selectOptions()
               
                  
                     #print(f'{key}:{value}',"\n")
@@ -201,6 +207,9 @@ class RecipeManagmentSystem:
                 for key, value in result_t.items():
                     print(f'{key}: {value}')
                 print("\n")
+            yes_input = (input("say yes if you want to stay in this category or not exit: "))
+            if yes_input.islower() == 'yes':
+                self.selectOptions()
 
 
         
@@ -265,6 +274,7 @@ class RecipeManagmentSystem:
     
         elif option == '6':
             self.selectOptions()
+   
 
 r = RecipeManagmentSystem()
 r.selectOptions()
