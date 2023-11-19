@@ -153,14 +153,6 @@ class RecipeManagmentSystem:
                 self.selectOptions()
             else:
                 self.exit_recipe()
-
-            yes_input = (input("say yes if you want to stay in this category or not exit: "))
-            if yes_input.islower() == 'yes':
-                self.selectOptions()
-
-              
-
-                
             
             
         elif user_Input == '3':
@@ -215,12 +207,10 @@ class RecipeManagmentSystem:
                 for key, value in result_t.items():
                     print(f'{key}: {value}')
                 print("\n")
-            yes_input = (input("say yes if you want to stay in this category or not exit: "))
-            if yes_input.islower() == 'yes':
-                self.selectOptions()
+          
 
             yes_input = (input("say yes if you want to go to main option or else exit: "))
-            if yes_input.islower() == 'yes':
+            if yes_input.lower() == 'yes':
                 self.selectOptions()
             else:
                 self.exit_recipe()      
@@ -261,6 +251,11 @@ class RecipeManagmentSystem:
 
         self.collection.document(recipe.id).set(recipe_dic)
         print('Recipe added successfully!')
+        confirmation = input("Do you want to select another recipe option (Type yes or no)? ")
+        if confirmation.lower() == 'yes':
+            self.selectOptions()
+        else:
+            self.exit_recipe()
     
     def editRecipe(self, id):
         while id.isdigit()==False:
