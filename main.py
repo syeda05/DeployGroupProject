@@ -192,13 +192,7 @@ class RecipeManagmentSystem:
                 self.selectOptions()
             else:
                 self.exit_recipe()
-            yes_input = (input("say yes if you want to stay in this category or not exit: "))
-            if yes_input.islower() == 'yes':
-                self.selectOptions()
-              
-                 
-                    #print(f'{key}:{value}',"\n")
-                # print("------------------------------------------------------------------------------------")
+            
         elif user_Input == '4':
             print("Dinner menu will be displayed.")
             dinner_docs = self.collection.where("category", "==", "Dinner").get()
