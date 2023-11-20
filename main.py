@@ -71,6 +71,7 @@ class RecipeManagmentSystem:
                     rating = input('Enter recipe rating: ')
 
                 recipe = Recipe(id, name, ing, ins, category, rating)
+
                 self.addRecipe(recipe)
 
             elif userInput == '3':
@@ -247,6 +248,7 @@ class RecipeManagmentSystem:
                  self.exit_recipe()      
 
     def addRecipe(self,recipe):
+
         recipe_dic ={"id":recipe.id,"name": recipe.recipeName, "ingredient": recipe.ingredients, "instruction": recipe.instruction, 'category': recipe.category, 'rating': recipe.rating}
 
         self.collection.document(recipe.id).set(recipe_dic)
