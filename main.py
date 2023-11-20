@@ -228,17 +228,10 @@ class RecipeManagmentSystem:
         else:
             return True
 
-    def delete2(self,input):
-
-        if self.collection.document(input).get().exists:
-            return False
-
-        else:
-            return True
 
     def deleteRecipe(self, userInput):
         
-        while not self.delete2():
+        while not self.delete2:
              print("The record with that ID doesn't exist")
              check=input("Do you want to select another record ID for deleteing (Type yes or no)?")
              if check.lower()=='yes':
@@ -271,8 +264,8 @@ class RecipeManagmentSystem:
         
         self.collection.document(r.id).set(recipe_dic)
         print('Recipe added successfully!')
-        
-            
+
+
     def editRecipe(self, id):
         while id.isdigit()==False:
             id=input("Enter the ID number of the recipe you want to edit :")
