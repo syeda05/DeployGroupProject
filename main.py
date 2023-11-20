@@ -215,7 +215,7 @@ class RecipeManagmentSystem:
                 self.selectOptions()
             else:
                 self.exit_recipe()  
-                    
+
     def delete2(self,input):
 
         if self.collection.document(input).get().exists:
@@ -226,7 +226,7 @@ class RecipeManagmentSystem:
 
     def deleteRecipe(self, userInput):
         
-        while not self.collection.document(userInput).get().exists:
+        while not self.delete2:
              print("The record with that ID doesn't exist")
              check=input("Do you want to select another record ID for deleteing (Type yes or no)?")
              if check.lower()=='yes':
@@ -244,7 +244,7 @@ class RecipeManagmentSystem:
              if confirmation.lower()=='yes':
                  self.selectOptions()                
              else:
-                self.exit_recipe()
+                 sys.exit()           
         else:
              confirmation2=input("Do you want to select another option?")
              
@@ -252,7 +252,7 @@ class RecipeManagmentSystem:
                  self.selectOptions()
                 
              else:
-                 self.exit_recipe()      
+                 sys.exit()      
 
     def addRecipe(self,recipe):
 
