@@ -352,7 +352,7 @@ class RecipeManagmentSystem:
     def exit_recipe(self):
         return sys.exit()
     
-def main(self):
+def main():
     r = RecipeManagmentSystem()
     r.selectOptions()
 
