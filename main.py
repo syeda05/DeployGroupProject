@@ -214,8 +214,15 @@ class RecipeManagmentSystem:
             if yes_input.lower() == 'yes':
                 self.selectOptions()
             else:
-                self.exit_recipe()      
+                self.exit_recipe()  
+                    
+    def delete2(self,input):
 
+        if self.collection.document(input).get().exists:
+            return False
+
+        else:
+            return True
 
     def deleteRecipe(self, userInput):
         
