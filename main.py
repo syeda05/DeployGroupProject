@@ -68,8 +68,7 @@ class RecipeManagmentSystem:
                     print("Invalid input. Please enter recipe rating.")
                     rating = input('Enter recipe rating: ')
 
-                recipe = Recipe(id, name, ing, ins, category, rating)
-                self.addRecipe(recipe)
+                self.addRecipe(id, name, ing, ins, category, rating)
 
             elif userInput == '3':
                 print("Function for Editing Recipe will be called")
@@ -102,7 +101,9 @@ class RecipeManagmentSystem:
         else:
             self.selectOptions()
 
-    def addRecipe(self,recipe):
+    def addRecipe(self,id, name, ing, ins, category, rating):
+        recipe = Recipe(id, name, ing, ins, category, rating)
+
         recipe_dic ={"id":recipe.id,"name": recipe.recipeName, "ingredient": recipe.ingredients, "instruction": recipe.instruction, 'category': recipe.category, 'rating': recipe.rating}
 
         self.collection.document(recipe.id).set(recipe_dic)
