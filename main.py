@@ -73,6 +73,8 @@ class RecipeManagmentSystem:
                 recipe = Recipe(id, name, ing, ins, category, rating)
 
                 self.addRecipe(recipe)
+                self.selectOptions()
+
 
             elif userInput == '3':
                 #display all the recipes with the viewRecipes function
@@ -253,11 +255,6 @@ class RecipeManagmentSystem:
 
         self.collection.document(recipe.id).set(recipe_dic)
         print('Recipe added successfully!')
-        confirmation = input("Do you want to select another recipe option (Type yes or no)? ")
-        if confirmation.lower() == 'yes':
-            self.selectOptions()
-        else:
-            self.exit_recipe()
     
     def editRecipe(self, id):
         while id.isdigit()==False:
