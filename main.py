@@ -77,6 +77,8 @@ class RecipeManagmentSystem:
                 recipe = Recipe(id, name, ing, ins, category, rating)
 
                 self.addRecipe(recipe)
+                self.selectOptions()
+
 
             elif userInput == '3':
                 #display all the recipes with the viewRecipes function
