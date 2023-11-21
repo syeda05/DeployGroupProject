@@ -9,7 +9,7 @@ class Recipe:
          self.id = id
          self.recipeName = recipeName
          self.ingredients = ingredients
-         self.instruction = instructions
+         self.instructions = instructions
          self.category =category
          self.rating = rating
 
