@@ -261,10 +261,11 @@ class RecipeManagmentSystem:
              else:
                  sys.exit()      
 
-    def addRecipe(self,r):
-        recipe_dic ={"id":r.id,"name":r.recipeName, "ingredient": r.ingredients, "instruction": r.instructions, 'category': r.category, 'rating': r.rating}
-        
-        self.collection.document(r.id).set(recipe_dic)
+    def addRecipe(self,recipe):
+
+        recipe_dic ={"id":recipe.id,"name": recipe.recipeName, "ingredient": recipe.ingredients, "instruction": recipe.instructions, 'category': recipe.category, 'rating': recipe.rating}
+
+        self.collection.document(recipe.id).set(recipe_dic)
         print('Recipe added successfully!')
 
 
