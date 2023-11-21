@@ -5,20 +5,24 @@ import random
 from collections import OrderedDict
 
 class Recipe:
-    def __init__(self, id, recipeName, ingredients, instructions, category, rating  ):
+    def __init__(self, id, recipeName, ingredients, instructions, category, rating):
          self.id = id
          self.recipeName = recipeName
          self.ingredients = ingredients
-         self.instructions = instructions
-         self.category =category
+         self.instructions = instructions  # Fixed typo: instruction -> instructions
+         self.category = category
          self.rating = rating
 
 class RecipeManagmentSystem:
-    def __init__(self, db_name = 'recipes'):
-        cred = credentials.Certificate("key.json")
-        firebase_admin.initialize_app(cred)
+    def __init__(self, db_name='recipes'):
+        if not firebase_admin._apps:  # Check if Firebase app is already initialized
+            cred = credentials.Certificate("key.json")
+            firebase_admin.initialize_app(cred)
+        
         self.db = firestore.client()
         self.collection = self.db.collection(db_name)
+
+
 
     def selectOptions(self):
         print('Recipe Management System')
@@ -216,12 +220,20 @@ class RecipeManagmentSystem:
             if yes_input.lower() == 'yes':
                 self.selectOptions()
             else:
-                self.exit_recipe()      
+                self.exit_recipe()  
+
+    def delete2(self,input):
+
+        if self.collection.document(input).get().exists:
+            return False
+
+        else:
+            return True
 
 
     def deleteRecipe(self, userInput):
         
-        while not self.collection.document(userInput).get().exists:
+        while not self.delete2:
              print("The record with that ID doesn't exist")
              check=input("Do you want to select another record ID for deleteing (Type yes or no)?")
              if check.lower()=='yes':
@@ -239,7 +251,7 @@ class RecipeManagmentSystem:
              if confirmation.lower()=='yes':
                  self.selectOptions()                
              else:
-                self.exit_recipe()
+                 print('redirect to exit the function')          
         else:
              confirmation2=input("Do you want to select another option?")
              
@@ -247,7 +259,7 @@ class RecipeManagmentSystem:
                  self.selectOptions()
                 
              else:
-                 self.exit_recipe()      
+                 sys.exit()      
 
     def addRecipe(self,recipe):
 
@@ -255,7 +267,8 @@ class RecipeManagmentSystem:
 
         self.collection.document(recipe.id).set(recipe_dic)
         print('Recipe added successfully!')
-    
+
+
     def editRecipe(self, id):
         while id.isdigit()==False:
             id=input("Enter the ID number of the recipe you want to edit :")
