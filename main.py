@@ -4,6 +4,8 @@ from firebase_admin import credentials, firestore
 import random
 from collections import OrderedDict
 
+cred = credentials.Certificate("key.json")
+firebase_admin.initialize_app(cred)
 class Recipe:
     def __init__(self, id, recipeName, ingredients, instructions, category, rating):
          self.id = id
@@ -15,8 +17,7 @@ class Recipe:
 
 class RecipeManagmentSystem:
     def __init__(self, db_name = 'recipes'):
-        cred = credentials.Certificate("key.json")
-        firebase_admin.initialize_app(cred)
+        
         self.db = firestore.client()
         self.collection = self.db.collection(db_name)
 
