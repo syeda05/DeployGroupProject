@@ -4,6 +4,8 @@ from firebase_admin import credentials, firestore
 import random
 from collections import OrderedDict
 
+cred = credentials.Certificate("key.json")
+firebase_admin.initialize_app(cred)
 class Recipe:
     def __init__(self, id, recipeName, ingredients, instructions, category, rating):
          self.id = id
@@ -14,15 +16,10 @@ class Recipe:
          self.rating = rating
 
 class RecipeManagmentSystem:
-    def __init__(self, db_name='recipes'):
-        if not firebase_admin._apps:  # Check if Firebase app is already initialized
-            cred = credentials.Certificate("key.json")
-            firebase_admin.initialize_app(cred)
+    def __init__(self, db_name = 'recipes'):
         
         self.db = firestore.client()
         self.collection = self.db.collection(db_name)
-
-
 
     def selectOptions(self):
         print('Recipe Management System')
@@ -95,7 +92,21 @@ class RecipeManagmentSystem:
         else:
             print("-----------------------------------------------")
             print("Error: The number should be between 1 to 5 inclusively")
+
             self.selectOptions()
+  
+
+
+        
+
+
+
+        
+
+
+
+
+       
 
     def view_recipe(self):
         print("1-View all")
