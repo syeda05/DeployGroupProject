@@ -84,7 +84,8 @@ class RecipeManagmentSystem:
                 #display all the recipes with the viewRecipes function
                 id=input("Enter the ID number of the recipe you want to edit :")
                 self.editRecipe(id)
-                
+                self.selectOptions()
+
             elif userInput == '4':
                 userInput=input("Enter the ID number of the record you want to delete :")
                 self.deleteRecipe(userInput)
@@ -352,12 +353,6 @@ class RecipeManagmentSystem:
             
         elif option == '6':
             self.selectOptions()
-        
-        confirmation = input("Do you want to select another recipe option (Type yes or no)? ")
-        if confirmation.lower() == 'yes':
-            self.selectOptions()
-        else:
-            self.exit_recipe()
 
     def exit_recipe(self):
         return sys.exit()
