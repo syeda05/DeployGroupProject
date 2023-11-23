@@ -233,18 +233,11 @@ class RecipeManagmentSystem:
             else:
                 self.exit_recipe()  
 
-    def delete2(self,input):
-
-        if self.collection.document(input).get().exists:
-            return False
-
-        else:
-            return True
 
 
     def deleteRecipe(self, userInput):
         
-        while not self.delete2:
+        while not self.collection.document(userInput).get().exists:
              print("The record with that ID doesn't exist")
              check=input("Do you want to select another record ID for deleteing (Type yes or no)?")
              if check.lower()=='yes':
