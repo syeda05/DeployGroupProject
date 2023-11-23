@@ -262,7 +262,7 @@ class RecipeManagmentSystem:
              if confirmation.lower()=='yes':
                  self.selectOptions()                
              else:
-                 print('redirect to exit the function')          
+                 self.exit_recipe()         
         else:
              confirmation2=input("Do you want to select another option?")
              
@@ -270,7 +270,8 @@ class RecipeManagmentSystem:
                  self.selectOptions()
                 
              else:
-                 sys.exit()      
+                 self.exit_recipe()   
+                    
 
     def addRecipe(self,recipe):
 
