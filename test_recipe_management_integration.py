@@ -25,20 +25,22 @@ class TestRecipeManagementSystem(unittest.TestCase):
 
         self.assertNotIn(recipe_added, updated, msg="Recipe should not be in the list")
     
-    @patch('main.RecipeManagmentSystem.editRecipe.input', create=True)   #creates a MagicMock() object
+    @patch('builtins.input', side_effect=['111','1', 'Gelato', 'yes'])   #creates a MagicMock() object
     def test_editRecipe(self, mock_editRecipe):
         management = main.RecipeManagmentSystem()
-        r=main.Recipe("12", "Brownie", 'potato, salt, pepper', 'gather, cut, cook', 'Lunch', '5')
+        r=main.Recipe("111", "Ice Cream", 'milk, sugar', 'blend together','Lunch', '4')
         management.addRecipe(r)
 
-        mock_editRecipe.side_effects = [1,'Fries','yes']    
+        # mock_editRecipe.side_effect = [1,'Fries','yes']   
 
-        management.editRecipe('62')
-        # mock_editRecipe.assert_called_once_with('62', option=1, name='Fries', verification='yes')
+        with patch('builtins.print'):  # to avoid unwanted prints during the test
+            management.editRecipe('111') 
+
+        # mock_editRecipe.assert_called_once_with('12', option=1, name='Fries', verification='yes')
         allrecipes = management.collection.get()
         final_data = [doc.to_dict() for doc in allrecipes]
 
-        recipe_dic ={"id":62,"name": "Fries", "ingredient": "chicken, salt", "instruction": 'gsgssgsgs', 'category': 'Lunch', 'rating': '5'}
+        recipe_dic ={"id":'111',"name": "Gelato", "ingredient": 'milk, sugar', "instruction": 'blend together', 'category': 'Lunch', 'rating': '4'}
         
         self.assertIn(recipe_dic, final_data)
 
