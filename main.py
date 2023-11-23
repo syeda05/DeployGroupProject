@@ -5,12 +5,12 @@ import random
 from collections import OrderedDict
 
 class Recipe:
-    def __init__(self, id, recipeName, ingredients, instructions, category, rating  ):
+    def __init__(self, id, recipeName, ingredients, instructions, category, rating):
          self.id = id
          self.recipeName = recipeName
          self.ingredients = ingredients
-         self.instruction = instructions
-         self.category =category
+         self.instructions = instructions  # Fixed typo: instruction -> instructions
+         self.category = category
          self.rating = rating
 
 class RecipeManagmentSystem:
@@ -71,7 +71,10 @@ class RecipeManagmentSystem:
                     rating = input('Enter recipe rating: ')
 
                 recipe = Recipe(id, name, ing, ins, category, rating)
+
                 self.addRecipe(recipe)
+                self.selectOptions()
+
 
             elif userInput == '3':
                 #display all the recipes with the viewRecipes function
@@ -87,7 +90,21 @@ class RecipeManagmentSystem:
         else:
             print("-----------------------------------------------")
             print("Error: The number should be between 1 to 5 inclusively")
+
             self.selectOptions()
+  
+
+
+        
+
+
+
+        
+
+
+
+
+       
 
     def view_recipe(self):
         print("1-View all")
@@ -126,6 +143,7 @@ class RecipeManagmentSystem:
                 self.selectOptions()
             else:
                 self.exit_recipe()
+           
         elif user_Input == '2':
             print("Breakfast menu will be shown.")
             break_docs = self.collection.where("category", "==", "Breakfast").get()
@@ -152,9 +170,6 @@ class RecipeManagmentSystem:
                 self.selectOptions()
             else:
                 self.exit_recipe()
-              
-
-                
             
             
         elif user_Input == '3':
@@ -186,10 +201,7 @@ class RecipeManagmentSystem:
                 self.selectOptions()
             else:
                 self.exit_recipe()
-              
-                 
-                    #print(f'{key}:{value}',"\n")
-                # print("------------------------------------------------------------------------------------")
+            
         elif user_Input == '4':
             print("Dinner menu will be displayed.")
             dinner_docs = self.collection.where("category", "==", "Dinner").get()
@@ -212,21 +224,26 @@ class RecipeManagmentSystem:
                 for key, value in result_t.items():
                     print(f'{key}: {value}')
                 print("\n")
+          
 
             yes_input = (input("say yes if you want to go to main option or else exit: "))
-            if yes_input.islower() == 'yes':
+            if yes_input.lower() == 'yes':
                 self.selectOptions()
             else:
-                self.exit_recipe()
+                self.exit_recipe()  
 
+    def delete2(self,input):
 
+        if self.collection.document(input).get().exists:
+            return False
 
-        
+        else:
+            return True
 
 
     def deleteRecipe(self, userInput):
         
-        while not self.collection.document(userInput).get().exists:
+        while not self.delete2:
              print("The record with that ID doesn't exist")
              check=input("Do you want to select another record ID for deleteing (Type yes or no)?")
              if check.lower()=='yes':
@@ -244,7 +261,7 @@ class RecipeManagmentSystem:
              if confirmation.lower()=='yes':
                  self.selectOptions()                
              else:
-                self.exit_recipe()
+                 print('redirect to exit the function')          
         else:
              confirmation2=input("Do you want to select another option?")
              
@@ -256,11 +273,13 @@ class RecipeManagmentSystem:
                     
 
     def addRecipe(self,recipe):
-        recipe_dic ={"id":recipe.id,"name": recipe.recipeName, "ingredient": recipe.ingredients, "instruction": recipe.instruction, 'category': recipe.category, 'rating': recipe.rating}
+
+        recipe_dic ={"id":recipe.id,"name": recipe.recipeName, "ingredient": recipe.ingredients, "instruction": recipe.instructions, 'category': recipe.category, 'rating': recipe.rating}
 
         self.collection.document(recipe.id).set(recipe_dic)
         print('Recipe added successfully!')
-    
+
+
     def editRecipe(self, id):
         while id.isdigit()==False:
             id=input("Enter the ID number of the recipe you want to edit :")
@@ -351,12 +370,16 @@ class RecipeManagmentSystem:
         else:
             self.exit_recipe()
 
-
     def exit_recipe(self):
         return sys.exit()
+    
+def main():
+    r = RecipeManagmentSystem()
+    r.selectOptions()
 
-            
+
+if __name__ == "__main__":
+    main()
    
 
-r = RecipeManagmentSystem()
-r.selectOptions()
+
