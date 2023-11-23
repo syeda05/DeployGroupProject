@@ -2,7 +2,6 @@ import unittest
 import main
 import firebase_admin
 from firebase_admin import credentials, firestore
-from main import DuplicateIDError
 
 
 class TestRecipeManagementSystem(unittest.TestCase):
@@ -18,11 +17,13 @@ class TestRecipeManagementSystem(unittest.TestCase):
         self.assertIn(recipe_dic, final_data)
     
     def test_duplicate_id(self):
-        management = main.RecipeManagmentSystem()
+        management = main.RecipeManagmentSystem() 
         recipe1 = main.Recipe('112','Salad','tomatoe, lettuce','Mix it all together','Lunch','1')
         recipe2 = main.Recipe('112','Sandwich','bread, tomatoe, lettuce','Put it all together','Breakfast','2')        
         management.addRecipe(recipe1)
-        management.addRecipe(recipe2)
+        self.assertFalse(management.addRecipe(recipe2)
+)
+       
         
 
 if __name__ =='__main__':
