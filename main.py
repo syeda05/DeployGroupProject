@@ -273,13 +273,19 @@ class RecipeManagmentSystem:
                  self.exit_recipe()   
                     
 
-    def addRecipe(self,recipe):
+    def addRecipe(self, recipe):
+        try:
+            if self.collection.document(recipe.id).get().exists:
+                raise DuplicateIDError("Duplicate Recipe ID")
 
-        recipe_dic ={"id":recipe.id,"name": recipe.recipeName, "ingredient": recipe.ingredients, "instruction": recipe.instructions, 'category': recipe.category, 'rating': recipe.rating}
+            recipe_dic = {"id": recipe.id, "name": recipe.recipeName, "ingredient": recipe.ingredients,
+                          "instruction": recipe.instructions, 'category': recipe.category, 'rating': recipe.rating}
 
-        self.collection.document(recipe.id).set(recipe_dic)
-        print('Recipe added successfully!')
-
+            self.collection.document(recipe.id).set(recipe_dic)
+            print('Recipe added successfully!')
+        except DuplicateIDError as e:
+            # Handle the exception as needed
+            print(f"Error: {e}")
 
     def editRecipe(self, id):
         while id.isdigit()==False:
@@ -374,6 +380,11 @@ class RecipeManagmentSystem:
     def exit_recipe(self):
         return sys.exit()
     
+
+class DuplicateIDError(Exception):
+    """Custom exception for duplicate recipe IDs."""
+    pass
+
 def main():
     r = RecipeManagmentSystem()
     r.selectOptions()
