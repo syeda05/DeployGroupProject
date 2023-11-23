@@ -22,6 +22,7 @@ class TestRecipeManagementSystem(unittest.TestCase):
         updated = [doc.to_dict() for doc in ref]
 
         self.assertNotIn(recipe_added, updated, msg="Recipe should not be in the list")
+        
 
 if __name__ =='__main__':
     unittest.main()
