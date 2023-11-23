@@ -220,6 +220,7 @@ class RecipeManagmentSystem:
                 self.exit_recipe()
 
 
+
         
 
 
@@ -251,7 +252,8 @@ class RecipeManagmentSystem:
                  self.selectOptions()
                 
              else:
-                 self.exit_recipe()      
+                 self.exit_recipe()   
+                    
 
     def addRecipe(self,recipe):
         recipe_dic ={"id":recipe.id,"name": recipe.recipeName, "ingredient": recipe.ingredients, "instruction": recipe.instruction, 'category': recipe.category, 'rating': recipe.rating}
