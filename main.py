@@ -246,21 +246,9 @@ class RecipeManagmentSystem:
 
         if verification.lower()=='yes':
              self.collection.document(userInput).delete()
-            
-             confirmation=input("Do you want to select another recipe option?")
-             
-             if confirmation.lower()=='yes':
-                 self.selectOptions()                
-             else:
-                 print('redirect to exit the function')          
+             print('Recipe deleted successfully')         
         else:
-             confirmation2=input("Do you want to select another option?")
-             
-             if confirmation2.lower()=='yes':
-                 self.selectOptions()
-                
-             else:
-                 sys.exit()      
+             return   
 
     def addRecipe(self,recipe):
 
