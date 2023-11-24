@@ -30,6 +30,26 @@ class TestRecipeManagementSystem(unittest.TestCase):
         test_input3 = 'category: Breakfast'
         self.assertIn(test_input3,output,"not present")
 
+    def test_view_lunch_recipes(self):
+        management = main.RecipeManagmentSystem()
+        
+        with patch('builtins.input', side_effect=['3', 'sys.exit']):
+            with patch('sys.exit'):
+                buffer = StringIO()
+                sys.stdout = buffer
+                management.view_recipe()
+                output = buffer.getvalue() #rescipes displayed to user on choosing 2-Breakfast (should be breakfast only)
+                sys.stdout = sys.__stdout__
+        
+        
+        #print("=======",print_output)
+        test_input1="category: Lunch"
+        self.assertIn(test_input1,output,"present")
+        test_input2="category: Dinner"
+        self.assertNotIn(test_input2,output,"present")
+        test_input3 = 'category: Breakfast'
+        self.assertNotIn(test_input3,output,"not present")
+
     
 
 
