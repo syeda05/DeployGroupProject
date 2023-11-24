@@ -3,6 +3,7 @@ import main
 import firebase_admin
 from firebase_admin import credentials, firestore
 
+
 class TestRecipeManagementSystem(unittest.TestCase):
     def test_addRecipe(self):
         management = main.RecipeManagmentSystem()
@@ -19,9 +20,14 @@ class TestRecipeManagementSystem(unittest.TestCase):
         management = main.RecipeManagmentSystem()
         r = main.Recipe("240", "Shawarma", 'chilli, salt, pepper', 'gather, cut, cook', 'Dinner', '3')
         # The ID 240 doesn't exist
-
         self.assertFalse(management.deleteRecipe(r.id))
 
+    def test_duplicate_id(self):
+        management = main.RecipeManagmentSystem() 
+        recipe1 = main.Recipe('112','Salad','tomatoe, lettuce','Mix it all together','Lunch','1')
+        recipe2 = main.Recipe('112','Sandwich','bread, tomatoe, lettuce','Put it all together','Breakfast','2')        
+        management.addRecipe(recipe1)
+        self.assertFalse(management.addRecipe(recipe2))
 
 if __name__ =='__main__':
     unittest.main()
