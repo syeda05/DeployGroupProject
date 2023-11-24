@@ -2,7 +2,6 @@ import unittest
 from unittest.mock import MagicMock, patch
 import firebase_admin
 from firebase_admin import credentials, firestore
-# from main import RecipeManagementSystem  # Assuming RecipeManagementSystem is in main.py
 import main 
 
 class TestRecipeManagementSystem(unittest.TestCase):
