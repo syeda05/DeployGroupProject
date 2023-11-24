@@ -273,13 +273,15 @@ class RecipeManagmentSystem:
                  self.exit_recipe()   
                     
 
-    def addRecipe(self,recipe):
-
-        recipe_dic ={"id":recipe.id,"name": recipe.recipeName, "ingredient": recipe.ingredients, "instruction": recipe.instructions, 'category': recipe.category, 'rating': recipe.rating}
+    def addRecipe(self, recipe):
+        if self.collection.document(recipe.id).get().exists:
+            return False
+        recipe_dic = {"id": recipe.id, "name": recipe.recipeName, "ingredient": recipe.ingredients,
+                      "instruction": recipe.instructions, 'category': recipe.category, 'rating': recipe.rating}
 
         self.collection.document(recipe.id).set(recipe_dic)
         print('Recipe added successfully!')
-
+          
 
     def editRecipe(self, id):
         while id.isdigit()==False:
@@ -374,6 +376,7 @@ class RecipeManagmentSystem:
     def exit_recipe(self):
         return sys.exit()
     
+
 def main():
     r = RecipeManagmentSystem()
     r.selectOptions()
