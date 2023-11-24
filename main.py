@@ -85,6 +85,7 @@ class RecipeManagmentSystem:
             elif userInput == '4':
                 userInput=input("Enter the ID number of the record you want to delete :")
                 self.deleteRecipe(userInput)
+                self.selectOptions()
             elif userInput == '5':
                 print("Function for Exiting Recipe will be called")
                 
