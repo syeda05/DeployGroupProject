@@ -2,41 +2,65 @@ import unittest
 import main
 import firebase_admin
 from firebase_admin import credentials, firestore
-from unittest import mock 
-from unittest.mock import MagicMock , patch
-
+from unittest import mock
+from main import RecipeManagmentSystem
+from unittest.mock import MagicMock , patch,Mock
+import sys
+from io import StringIO
 
 class TestRecipeManagementSystem(unittest.TestCase):
-    # def test_addRecipe(self):
-    #     management = main.RecipeManagmentSystem()
-    #     recipe = main.Recipe('13','Smoothie','Avocado, banana, yogurt, tofu, nut butters and chia seeds','Put it all in the blender in the order above. Then blend until it’s as smooth as you like! Pour it in a cup — or a bowl, if you’re a smoothie bowl fan — and slurp it up.','Breakfast','3')
-    #     recipe_dic ={"id":recipe.id,"name": recipe.recipeName, "ingredient": recipe.ingredients, "instruction": recipe.instructions, 'category': recipe.category, 'rating': recipe.rating}
-
-    #     management.addRecipe(recipe)
-
-    #     allrecipes = management.collection.get()
-    #     final_data = [doc.to_dict() for doc in allrecipes]
-    #     self.assertIn(recipe_dic, final_data)
-
-
     
-    
-    @mock.patch('builtins.input', side_effect=['2']) 
-    @mock.patch('builtins.print')
-    def test_view_recipe(self):
+    def test_view_breakfast_recipes(self):
         management = main.RecipeManagmentSystem()
-        management.view_recipe()
-        #expected_output = self.collection.where("category","==","Breakfast")
-      
-        output =  self.collection.where("category","==","Breakfast")
-     
-        message = "First value and second value are not equal !"
-        self.assertEqual(expected_output,output,message) 
-
-
-
-        print(output)
         
+        with patch('builtins.input', side_effect=['2', 'sys.exit']):
+            with patch('sys.exit'):
+                buffer = StringIO()
+                sys.stdout = buffer
+                management.view_recipe()
+                output = buffer.getvalue() #rescipes displayed to user on choosing 2-Breakfast (should be breakfast only)
+                sys.stdout = sys.__stdout__
+        
+        
+        #print("=======",print_output)
+        test_input1="category: Lunch"
+        self.assertNotIn(test_input1,output,"present")
+        test_input2="category: Dinner"
+        self.assertNotIn(test_input2,output,"present")
+        test_input3 = 'category: Breakfast'
+        self.assertIn(test_input3,output,"not present")
+
+    
+
+
+
+
+
+        
+        
+
+        
+        
+
+# # 👇️ restore stdout to default for print()
+# sys.stdout = sys.__stdout__
+
+# # 👇️ -> This will be stored in the print_output variable
+# print('->', print_output)
+
+    # def test_view_Lunch_recipes(self):
+    #     management = main.RecipeManagmentSystem()
+        
+    #     with patch('builtins.input', side_effect=['3', 'sys.exit']):
+    #         with patch('sys.exit') as mock_exit:
+    #             management.view_recipe()
+
+
+
+        
+
+
+
         
 
 
