@@ -237,19 +237,15 @@ class RecipeManagmentSystem:
 
     def deleteRecipe(self, userInput):
         
-        while not self.collection.document(userInput).get().exists:
+        if not self.collection.document(userInput).get().exists:
              print("The record with that ID doesn't exist")
-             check=input("Do you want to select another record ID for deleteing (Type yes or no)?")
-             if check.lower()=='yes':
-                userInput=input("Enter the ID number of the record you want to delete :")
-             else:
-                self.selectOptions()
+             return False
                
         verification= input("Are you sure you want to delete the record (Type yes or no)?")
 
         if verification.lower()=='yes':
              self.collection.document(userInput).delete()
-             print('The record has been deleted sucessfully')
+            
              confirmation=input("Do you want to select another recipe option?")
              
              if confirmation.lower()=='yes':
