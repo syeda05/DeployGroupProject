@@ -21,6 +21,33 @@ class TestRecipeManagementSystem(unittest.TestCase):
         final_data = [doc.to_dict() for doc in allrecipes]
         self.assertIn(recipe_dic, final_data)
     
+    def test_addRecipe_with_missing_field(self):
+        management = main.RecipeManagmentSystem()
+        recipe1 = main.Recipe('33','','espresso, milk, vanilla extract, caramal sauce',"Heat the milk using a milk frother or steam wand. Alternatively, warm on the hob until just steaming (don't boil) and use a hand frother – you want to aim for a temperature between 60C-70C.",'Breakfast','4')
+        recipe2 = main.Recipe('33','Caramel macchiato','',"Heat the milk using a milk frother or steam wand. Alternatively, warm on the hob until just steaming (don't boil) and use a hand frother – you want to aim for a temperature between 60C-70C.",'Breakfast','4')
+        recipe3 = main.Recipe('33','Caramel macchiato','espresso, milk, vanilla extract, caramal sauce',"",'Breakfast','4')
+        recipe4 = main.Recipe('33','Caramel macchiato','espresso, milk, vanilla extract, caramal sauce',"Heat the milk using a milk frother or steam wand. Alternatively, warm on the hob until just steaming (don't boil) and use a hand frother – you want to aim for a temperature between 60C-70C.",'Breakfast','4')
+
+        recipe_dic1 ={"id":recipe1.id,"name": recipe1.recipeName, "ingredient": recipe1.ingredients, "instruction": recipe1.instructions, 'category': recipe1.category, 'rating': recipe1.rating}
+        recipe_dic2 ={"id":recipe2.id,"name": recipe2.recipeName, "ingredient": recipe2.ingredients, "instruction": recipe2.instructions, 'category': recipe2.category, 'rating': recipe2.rating}
+        recipe_dic3 ={"id":recipe3.id,"name": recipe3.recipeName, "ingredient": recipe3.ingredients, "instruction": recipe3.instructions, 'category': recipe3.category, 'rating': recipe3.rating}
+        recipe_dic4 ={"id":recipe4.id,"name": recipe4.recipeName, "ingredient": recipe4.ingredients, "instruction": recipe4.instructions, 'category': recipe4.category, 'rating': recipe4.rating}
+
+
+        management.addRecipe(recipe1)
+        management.addRecipe(recipe2)
+        management.addRecipe(recipe3)
+        management.addRecipe(recipe4)
+
+
+        allrecipes = management.collection.get()
+        final_data = [doc.to_dict() for doc in allrecipes]
+        self.assertNotIn(recipe_dic1, final_data)
+        self.assertNotIn(recipe_dic2, final_data)
+        self.assertNotIn(recipe_dic3, final_data)
+        self.assertNotIn(recipe_dic4, final_data)
+
+    
     def test_view_breakfast_recipes(self):
         management = main.RecipeManagmentSystem()
         
