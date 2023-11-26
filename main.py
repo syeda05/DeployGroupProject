@@ -4,6 +4,8 @@ from firebase_admin import credentials, firestore
 import random
 from collections import OrderedDict
 
+cred = credentials.Certificate("key.json")
+firebase_admin.initialize_app(cred)
 class Recipe:
     def __init__(self, id, recipeName, ingredients, instructions, category, rating):
          self.id = id
@@ -15,8 +17,7 @@ class Recipe:
 
 class RecipeManagmentSystem:
     def __init__(self, db_name = 'recipes'):
-        cred = credentials.Certificate("key.json")
-        firebase_admin.initialize_app(cred)
+        
         self.db = firestore.client()
         self.collection = self.db.collection(db_name)
 
@@ -80,10 +81,12 @@ class RecipeManagmentSystem:
                 #display all the recipes with the viewRecipes function
                 id=input("Enter the ID number of the recipe you want to edit :")
                 self.editRecipe(id)
-                
+                self.selectOptions()
+
             elif userInput == '4':
                 userInput=input("Enter the ID number of the record you want to delete :")
                 self.deleteRecipe(userInput)
+                self.selectOptions()
             elif userInput == '5':
                 print("Function for Exiting Recipe will be called")
                 
@@ -232,52 +235,31 @@ class RecipeManagmentSystem:
             else:
                 self.exit_recipe()  
 
-    def delete2(self,input):
-
-        if self.collection.document(input).get().exists:
-            return False
-
-        else:
-            return True
 
 
     def deleteRecipe(self, userInput):
         
-        while not self.delete2:
+        if not self.collection.document(userInput).get().exists:
              print("The record with that ID doesn't exist")
-             check=input("Do you want to select another record ID for deleteing (Type yes or no)?")
-             if check.lower()=='yes':
-                userInput=input("Enter the ID number of the record you want to delete :")
-             else:
-                self.selectOptions()
+             return False
                
         verification= input("Are you sure you want to delete the record (Type yes or no)?")
 
         if verification.lower()=='yes':
              self.collection.document(userInput).delete()
-             print('The record has been deleted sucessfully')
-             confirmation=input("Do you want to select another recipe option?")
-             
-             if confirmation.lower()=='yes':
-                 self.selectOptions()                
-             else:
-                 print('redirect to exit the function')          
+             print('Recipe deleted successfully')         
         else:
-             confirmation2=input("Do you want to select another option?")
-             
-             if confirmation2.lower()=='yes':
-                 self.selectOptions()
-                
-             else:
-                 sys.exit()      
+             return   
 
-    def addRecipe(self,recipe):
-
-        recipe_dic ={"id":recipe.id,"name": recipe.recipeName, "ingredient": recipe.ingredients, "instruction": recipe.instructions, 'category': recipe.category, 'rating': recipe.rating}
+    def addRecipe(self, recipe):
+        if self.collection.document(recipe.id).get().exists:
+            return False
+        recipe_dic = {"id": recipe.id, "name": recipe.recipeName, "ingredient": recipe.ingredients,
+                      "instruction": recipe.instructions, 'category': recipe.category, 'rating': recipe.rating}
 
         self.collection.document(recipe.id).set(recipe_dic)
         print('Recipe added successfully!')
-
+          
 
     def editRecipe(self, id):
         while id.isdigit()==False:
@@ -362,16 +344,11 @@ class RecipeManagmentSystem:
             
         elif option == '6':
             self.selectOptions()
-        
-        confirmation = input("Do you want to select another recipe option (Type yes or no)? ")
-        if confirmation.lower() == 'yes':
-            self.selectOptions()
-        else:
-            self.exit_recipe()
 
     def exit_recipe(self):
         return sys.exit()
     
+
 def main():
     r = RecipeManagmentSystem()
     r.selectOptions()
