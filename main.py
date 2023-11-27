@@ -38,9 +38,9 @@ class RecipeManagmentSystem:
             if userInput == '1':
                 self.view_recipe()
             elif userInput == '2':
-                num = random.randint(0,200)   #generate random number for id
+                num = random.randint(0,500)   #generate random number for id
                 while self.collection.document(str(num)).get().exists:
-                    num = random.randint(0,200)
+                    num = random.randint(0,500)
                 id = str(num)
 
                 name = input('Enter recipe name: ')
@@ -254,17 +254,16 @@ class RecipeManagmentSystem:
     def addRecipe(self, recipe):
         if self.collection.document(recipe.id).get().exists:
             return False
-        if recipe.recipeName == '' or recipe.recipeName.isdigit():
+        if recipe.recipeName == '' or recipe.recipeName.isdigit() or recipe.recipeName[0]=='-' :
             print("Invalid input. Please enter a recipe name.")
             return
-        if recipe.ingredients == '' or recipe.ingredients.isdigit():
+        if recipe.ingredients == '' or recipe.ingredients.isdigit() or recipe.recipeName[0]=='-':
             print("Invalid input. Please enter ingredients.")
             return 
-             
-        if recipe.instructions == '' or recipe.instructions.isdigit():
+        if recipe.instructions == '' or recipe.instructions.isdigit() or recipe.recipeName[0]=='-':
             print("Invalid input. Please enter recipe instructions.")
             return
-        if recipe.category == '' or recipe.category.isdigit() or recipe.category.lower() not in ['breakfast','lunch','dinner']:
+        if recipe.category == '' or recipe.category.isdigit() or recipe.category.lower() not in ['breakfast','lunch','dinner'] or recipe.recipeName[0]=='-':
             print("Invalid input. Please enter recipe category.")
             return
         if not recipe.rating.isdigit() or (int(recipe.rating)<1 or int(recipe.rating)>5) :

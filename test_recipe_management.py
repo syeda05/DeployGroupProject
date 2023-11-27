@@ -89,7 +89,7 @@ class TestRecipeManagementSystem(unittest.TestCase):
         recipe2 = main.Recipe('66','Chicken Fajita Tacos','1',"Combine orange juice, taco seasoning, and vegetable oil in a large resealable bag. Add chicken, coat with the marinade, squeeze out excess air, and seal the bag. Marinate in the refrigerator overnight.",'Dinner','4')
         recipe3 = main.Recipe('66','Chicken Fajita Tacos','-1',"Combine orange juice, taco seasoning, and vegetable oil in a large resealable bag. Add chicken, coat with the marinade, squeeze out excess air, and seal the bag. Marinate in the refrigerator overnight.",'Dinner','4')
         recipe4 = main.Recipe('66','Chicken Fajita Tacos','boneless chicken, vegetable oil, bell pepper, sour cream',"1",'Dinner','4')
-        recipe5 = main.Recipe('66','Chicken Fajita Tacos','boneless chicken, vegetable oil, bell pepper, sour cream',"1",'Dinner','4')
+        recipe5 = main.Recipe('66','Chicken Fajita Tacos','boneless chicken, vegetable oil, bell pepper, sour cream',"-1",'Dinner','4')
 
 
         recipe_dic ={"id":recipe1.id,"name": recipe1.recipeName, "ingredient": recipe1.ingredients, "instruction": recipe1.instructions, 'category': recipe1.category, 'rating': recipe1.rating}
