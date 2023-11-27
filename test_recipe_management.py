@@ -81,7 +81,41 @@ class TestRecipeManagementSystem(unittest.TestCase):
         final_data = [doc.to_dict() for doc in allrecipes]
         self.assertNotIn(recipe_dic1, final_data)
         self.assertNotIn(recipe_dic2, final_data)
+    
+    def test_addRecipe_with_invalid_input(self):
+        management = main.RecipeManagmentSystem()
+        recipe = main.Recipe('66','-1','boneless chicken, vegetable oil, bell pepper, sour cream',"Combine orange juice, taco seasoning, and vegetable oil in a large resealable bag. Add chicken, coat with the marinade, squeeze out excess air, and seal the bag. Marinate in the refrigerator overnight.",'Dinner','4')
+        recipe1 = main.Recipe('66','1','boneless chicken, vegetable oil, bell pepper, sour cream',"Combine orange juice, taco seasoning, and vegetable oil in a large resealable bag. Add chicken, coat with the marinade, squeeze out excess air, and seal the bag. Marinate in the refrigerator overnight.",'Dinner','4')
+        recipe2 = main.Recipe('66','Chicken Fajita Tacos','1',"Combine orange juice, taco seasoning, and vegetable oil in a large resealable bag. Add chicken, coat with the marinade, squeeze out excess air, and seal the bag. Marinate in the refrigerator overnight.",'Dinner','4')
+        recipe3 = main.Recipe('66','Chicken Fajita Tacos','-1',"Combine orange juice, taco seasoning, and vegetable oil in a large resealable bag. Add chicken, coat with the marinade, squeeze out excess air, and seal the bag. Marinate in the refrigerator overnight.",'Dinner','4')
+        recipe4 = main.Recipe('66','Chicken Fajita Tacos','boneless chicken, vegetable oil, bell pepper, sour cream',"1",'Dinner','4')
+        recipe5 = main.Recipe('66','Chicken Fajita Tacos','boneless chicken, vegetable oil, bell pepper, sour cream',"1",'Dinner','4')
 
+
+        recipe_dic ={"id":recipe1.id,"name": recipe1.recipeName, "ingredient": recipe1.ingredients, "instruction": recipe1.instructions, 'category': recipe1.category, 'rating': recipe1.rating}
+        recipe_dic1 ={"id":recipe1.id,"name": recipe1.recipeName, "ingredient": recipe1.ingredients, "instruction": recipe1.instructions, 'category': recipe1.category, 'rating': recipe1.rating}
+        recipe_dic2 ={"id":recipe2.id,"name": recipe2.recipeName, "ingredient": recipe2.ingredients, "instruction": recipe2.instructions, 'category': recipe2.category, 'rating': recipe2.rating}
+        recipe_dic3 ={"id":recipe3.id,"name": recipe3.recipeName, "ingredient": recipe3.ingredients, "instruction": recipe3.instructions, 'category': recipe3.category, 'rating': recipe3.rating}
+        recipe_dic4 ={"id":recipe4.id,"name": recipe4.recipeName, "ingredient": recipe4.ingredients, "instruction": recipe4.instructions, 'category': recipe4.category, 'rating': recipe4.rating}
+        recipe_dic5 ={"id":recipe5.id,"name": recipe5.recipeName, "ingredient": recipe5.ingredients, "instruction": recipe5.instructions, 'category': recipe5.category, 'rating': recipe5.rating}
+
+
+        with patch('builtins.print'):
+            management.addRecipe(recipe)
+            management.addRecipe(recipe1)
+            management.addRecipe(recipe2)
+            management.addRecipe(recipe3)
+            management.addRecipe(recipe4)
+            management.addRecipe(recipe5)
+
+        allrecipes = management.collection.get()
+        final_data = [doc.to_dict() for doc in allrecipes]
+        self.assertNotIn(recipe_dic, final_data)
+        self.assertNotIn(recipe_dic1, final_data)
+        self.assertNotIn(recipe_dic2, final_data)
+        self.assertNotIn(recipe_dic3, final_data)
+        self.assertNotIn(recipe_dic4, final_data)
+        self.assertNotIn(recipe_dic5, final_data)
     
     def test_view_breakfast_recipes(self):
         management = main.RecipeManagmentSystem()
