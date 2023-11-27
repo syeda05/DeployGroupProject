@@ -63,6 +63,18 @@ class TestRecipeManagementSystem(unittest.TestCase):
 
         self.assertNotIn(recipe_dic1, final_data)
         self.assertNotIn(recipe_dic2, final_data)
+    
+    def test_addRecipe_category(self):
+        management = main.RecipeManagmentSystem()
+        recipe = main.Recipe('55','Apple Pie','butter, sugar, apple','Mix all the ingredients and bake','Dessert','2')
+        recipe_dic ={"id":recipe.id,"name": recipe.recipeName, "ingredient": recipe.ingredients, "instruction": recipe.instructions, 'category': recipe.category, 'rating': recipe.rating}
+
+        with patch('builtins.print'):
+            management.addRecipe(recipe)
+
+        allrecipes = management.collection.get()
+        final_data = [doc.to_dict() for doc in allrecipes]
+        self.assertNotIn(recipe_dic, final_data)
 
     
     def test_view_breakfast_recipes(self):
