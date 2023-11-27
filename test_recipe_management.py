@@ -68,19 +68,22 @@ class TestRecipeManagementSystem(unittest.TestCase):
         management = main.RecipeManagmentSystem()
         recipe1 = main.Recipe('55','Apple Pie','butter, sugar, apple','Mix all the ingredients and bake','Dessert','2')
         recipe2 = main.Recipe('55','Apple Pie','butter, sugar, apple','Mix all the ingredients and bake','12','2')
+        recipe3 = main.Recipe('55','Apple Pie','butter, sugar, apple','Mix all the ingredients and bake','-1','2')
 
         recipe_dic1 ={"id":recipe1.id,"name": recipe1.recipeName, "ingredient": recipe1.ingredients, "instruction": recipe1.instructions, 'category': recipe1.category, 'rating': recipe1.rating}
         recipe_dic2 ={"id":recipe2.id,"name": recipe2.recipeName, "ingredient": recipe2.ingredients, "instruction": recipe2.instructions, 'category': recipe2.category, 'rating': recipe2.rating}
+        recipe_dic3 ={"id":recipe3.id,"name": recipe3.recipeName, "ingredient": recipe3.ingredients, "instruction": recipe3.instructions, 'category': recipe3.category, 'rating': recipe3.rating}
 
         with patch('builtins.print'):
             management.addRecipe(recipe1)
             management.addRecipe(recipe2)
-
+            management.addRecipe(recipe3)
 
         allrecipes = management.collection.get()
         final_data = [doc.to_dict() for doc in allrecipes]
         self.assertNotIn(recipe_dic1, final_data)
         self.assertNotIn(recipe_dic2, final_data)
+        self.assertNotIn(recipe_dic3, final_data)
     
     def test_addRecipe_with_invalid_input(self):
         management = main.RecipeManagmentSystem()
