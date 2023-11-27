@@ -257,13 +257,13 @@ class RecipeManagmentSystem:
         if recipe.recipeName == '' or recipe.recipeName.isdigit() or recipe.recipeName[0]=='-' :
             print("Invalid input. Please enter a recipe name.")
             return
-        if recipe.ingredients == '' or recipe.ingredients.isdigit() or recipe.recipeName[0]=='-':
+        if recipe.ingredients == '' or recipe.ingredients.isdigit() or recipe.ingredients[0]=='-':
             print("Invalid input. Please enter ingredients.")
             return 
-        if recipe.instructions == '' or recipe.instructions.isdigit() or recipe.recipeName[0]=='-':
+        if recipe.instructions == '' or recipe.instructions.isdigit() or recipe.instructions[0]=='-':
             print("Invalid input. Please enter recipe instructions.")
             return
-        if recipe.category == '' or recipe.category.isdigit() or recipe.category.lower() not in ['breakfast','lunch','dinner'] or recipe.recipeName[0]=='-':
+        if recipe.category == '' or recipe.category.isdigit() or recipe.category.lower() not in ['breakfast','lunch','dinner'] or recipe.category[0]=='-':
             print("Invalid input. Please enter recipe category.")
             return
         if not recipe.rating.isdigit() or (int(recipe.rating)<1 or int(recipe.rating)>5) :
