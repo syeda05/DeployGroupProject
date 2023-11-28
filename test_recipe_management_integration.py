@@ -2,7 +2,11 @@ import unittest
 from unittest.mock import MagicMock, patch
 import firebase_admin
 from firebase_admin import credentials, firestore
-
+from unittest import mock
+from unittest.mock import MagicMock, patch
+import sys
+from io import StringIO
+# from main import RecipeManagementSystem  # Assuming RecipeManagementSystem is in main.py
 import main 
 
 class TestRecipeManagementSystem(unittest.TestCase):
@@ -44,6 +48,38 @@ class TestRecipeManagementSystem(unittest.TestCase):
         recipe_dic ={"id":'111',"name": "Gelato", "ingredient": 'milk, sugar', "instruction": 'blend together', 'category': 'Lunch', 'rating': '4'}
         
         self.assertIn(recipe_dic, final_data)
+
+
+    
+    def test_view_recipe(self):
+        management = main.RecipeManagmentSystem()
+        recipe1 = main.Recipe("23", "Juices kiwi", "apple,orange,kiwi", "mix apple and orange, kiwi together", "Dinner", "5")
+        management.addRecipe(recipe1)
+
+        with patch('builtins.input', side_effect=['4', 'sys.exit']):
+            with patch('sys.exit'):  # to avoid unwanted prints during the test
+                buffer = StringIO()
+                sys.stdout = buffer
+                management.view_recipe()
+                output = buffer.getvalue()
+                sys.stdout = sys.__stdout__
+
+        
+       
+       
+    
+    
+       
+        expected_recipe = {"id":"23", "name ": "Juices kiwi", "ingredint": "apple,orange,kiwi", "instruction":"mix apple and orange, kiwi together",  "category":"Dinner","rating" :"5"}
+        for keys, values in expected_recipe.items():
+            print(values)
+        
+    
+       
+        self.assertIn(values, output)
+
+       
+
 
 
 if __name__ =='__main__':
