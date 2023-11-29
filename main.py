@@ -11,7 +11,7 @@ class Recipe:
          self.id = id
          self.recipeName = recipeName
          self.ingredients = ingredients
-         self.instructions = instructions  # Fixed typo: instruction -> instructions
+         self.instructions = instructions  
          self.category = category
          self.rating = rating
 
@@ -53,8 +53,7 @@ class RecipeManagmentSystem:
                     print("Invalid input. Please enter ingredients.")
                     ing = input('Enter recipe ingredients (Separate values by ,): ')
                 ing = ing.split(',')
-                
-                
+                  
                 ins = input('Enter recipe instructions: ')
                 while ins == '' or ins.isdigit():
                     print("Invalid input. Please enter recipe instructions.")
@@ -66,7 +65,6 @@ class RecipeManagmentSystem:
                     category = input('Enter recipe category (Breakfast, Lunch, or Dinner): ')
 
                 rating = input('Enter recipe rating: ')
-
                 while not rating.isdigit() or (int(rating)<1 or int(rating)>5) :
                     print("Invalid input. Please enter recipe rating.")
                     rating = input('Enter recipe rating: ')
@@ -75,7 +73,6 @@ class RecipeManagmentSystem:
 
                 self.addRecipe(recipe)
                 self.selectOptions()
-
 
             elif userInput == '3':
                 #display all the recipes with the viewRecipes function
@@ -88,26 +85,12 @@ class RecipeManagmentSystem:
                 self.deleteRecipe(userInput)
                 self.selectOptions()
             elif userInput == '5':
-                print("Function for Exiting Recipe will be called")
-                
+                print("Function for Exiting Recipe will be called")      
         else:
             print("-----------------------------------------------")
             print("Error: The number should be between 1 to 5 inclusively")
 
-            self.selectOptions()
-  
-
-
-        
-
-
-
-        
-
-
-
-
-       
+            self.selectOptions()   
 
     def view_recipe(self):
         print("1-View all")
@@ -121,8 +104,7 @@ class RecipeManagmentSystem:
             print("All recipes will be displayed.")
             docs = self.collection.get()
             lists = []
-            for view_recipe in docs:
-                
+            for view_recipe in docs:      
                 data_view = view_recipe
                 result_view = {
                     'id':data_view.get('id'),
@@ -131,15 +113,12 @@ class RecipeManagmentSystem:
                     'rating':data_view.get('rating'),
                     'ingredient':data_view.get('ingredient'),
                     'instruction':data_view.get('instruction'),
-
                 }
-
                 lists.append(result_view)
             for result_view in lists:
                 for key, value in result_view.items():
                     print(f'{key}: {value}')
                 print("\n")
-
 
             yes_input = (input("say yes if you want to go to main option or not exit: "))
             if yes_input.lower() == 'yes':
@@ -153,7 +132,6 @@ class RecipeManagmentSystem:
             list =[]
             for recipe_break in break_docs:
                 data_all = recipe_break
-
                 total = {
                     'id': data_all.get('id'),
                     'name': data_all.get('name'),
@@ -161,7 +139,6 @@ class RecipeManagmentSystem:
                     'rating': data_all.get('rating'),
                     'ingredient': data_all.get('ingredient'),
                     'instruction': data_all.get('instruction')
-
                 }
                 list.append(total)
             for total in list:
@@ -173,17 +150,13 @@ class RecipeManagmentSystem:
                 self.selectOptions()
             else:
                 self.exit_recipe()
-            
-            
+                       
         elif user_Input == '3':
             lunchList=[]
             print("Lunch menu will be displayed.")
             lunch_docs = self.collection.where("category", "==", "Lunch").get()
             for lunches in lunch_docs:
-                
                 datas = lunches
-                
-
                 result = {
                     'id':datas.get('id'),
                     'name':datas.get('name'),
@@ -191,9 +164,7 @@ class RecipeManagmentSystem:
                     'rating':datas.get('rating'),
                     'ingredient':datas.get('ingredient'),
                     'instruction':datas.get('instruction')
-
                 }
-
                 lunchList.append(result)
             for result in lunchList:
                 for key, value in result.items():
@@ -210,9 +181,7 @@ class RecipeManagmentSystem:
             dinner_docs = self.collection.where("category", "==", "Dinner").get()
             list_d = []
             for dinner in dinner_docs:
-                data_d = dinner
-               
-
+                data_d = dinner            
                 results_t = {
                     'id':data_d.get('id'),
                     'name':data_d.get('name'),
@@ -220,14 +189,12 @@ class RecipeManagmentSystem:
                     'rating':data_d.get('rating'),
                     'ingredient':data_d.get('ingredient'),
                     'instruction':data_d.get('instruction'),
-
                 }
                 list_d.append(results_t)
             for result_t in list_d:
                 for key, value in result_t.items():
                     print(f'{key}: {value}')
-                print("\n")
-          
+                print("\n")   
 
             yes_input = (input("say yes if you want to go to main option or else exit: "))
             if yes_input.lower() == 'yes':
@@ -235,16 +202,12 @@ class RecipeManagmentSystem:
             else:
                 self.exit_recipe()  
 
-
-
     def deleteRecipe(self, userInput):
-        
         if not self.collection.document(userInput).get().exists:
              print("The record with that ID doesn't exist")
              return False
                
         verification= input("Are you sure you want to delete the record (Type yes or no)?")
-
         if verification.lower()=='yes':
              self.collection.document(userInput).delete()
              print('Recipe deleted successfully')         
@@ -273,8 +236,7 @@ class RecipeManagmentSystem:
                       "instruction": recipe.instructions, 'category': recipe.category, 'rating': recipe.rating}
 
         self.collection.document(recipe.id).set(recipe_dic)
-        print('Recipe added successfully!')
-          
+        print('Recipe added successfully!')         
 
     def editRecipe(self, id):
         while id.isdigit()==False:
@@ -342,9 +304,7 @@ class RecipeManagmentSystem:
                 print("Recipe category updated successfully!")
             else:
                 self.selectOptions()
-
-
-        
+       
         elif option == '5':
             rating = input('Enter recipe rating: ')
             while not rating.isdigit() or (int(rating)<1 or int(rating)>5) :
@@ -361,16 +321,11 @@ class RecipeManagmentSystem:
             self.selectOptions()
 
     def exit_recipe(self):
-        return sys.exit()
-    
+        return sys.exit()  
 
 def main():
     r = RecipeManagmentSystem()
     r.selectOptions()
 
-
 if __name__ == "__main__":
     main()
-   
-
-
