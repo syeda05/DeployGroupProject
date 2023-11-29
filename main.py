@@ -337,9 +337,10 @@ class RecipeManagmentSystem:
 
         elif option == '4':
             category = input('Enter recipe category (Breakfast, Lunch, or Dinner): ')
-            while category == '' or category.isdigit() or category.lower() not in ['breakfast','lunch','dinner']:
+            if category == '' or category.isdigit() or category.lower() not in ['breakfast','lunch','dinner'] or  category[0]=='-':
                 print("Invalid input. Please enter recipe category.")
-                category = input('Enter recipe category (Breakfast, Lunch, or Dinner): ')
+                # category = input('Enter recipe category (Breakfast, Lunch, or Dinner): ')
+                return
             verification= input("Are you sure you want to update the record (Type yes or no)?")
             if verification.lower()=='yes':
                 self.collection.document(id).update({'category':category})
