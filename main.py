@@ -296,15 +296,16 @@ class RecipeManagmentSystem:
     
         if option == '1':
             name= input("Enter recipe name: ")
-            while name == '' or name.isdigit():
+            if name == '' or name.isdigit() or name[0]=='-':
                 print("Invalid input. Please enter a recipe name.")
-                name = input('Enter recipe name: ')
+                return
             verification= input("Are you sure you want to update the record (Type yes or no)?")
             if verification.lower()=='yes':
                 self.collection.document(id).update({'name':name})
                 print("Recipe name updated successfully!")
             else:
                 self.selectOptions()
+
 
         elif option == '2':
             ing = input('Enter recipe ingredients (Separate values by ,): ')
