@@ -197,6 +197,41 @@ class TestRecipeManagementSystem(unittest.TestCase):
         self.assertNotIn(recipe_dic1, final_data)
         self.assertNotIn(recipe_dic2, final_data)
         self.assertNotIn(recipe_dic3, final_data)
+    @patch('builtins.input', side_effect=['70', '4', '','71', '4', '3','72', '4', 'dessert','33', '4', '-5'])
+    def test_editRecipe_category(self, mock_editRecipe):
+        management = main.RecipeManagmentSystem()
+        r1 = main.Recipe("70", "Ice Cream", 'milk, sugar', 'blend together', 'Lunch', '2')
+        r2 = main.Recipe("71", "Ice Cream", 'milk,honey,sugar', 'blend together', 'Lunch', '2')
+        r3 = main.Recipe("72", "Ice Cream", 'milk,honey,sugar', 'blend together', 'Lunch', '2')
+        r4 = main.Recipe("33", "Ice Cream", 'milk,honey,sugar', 'blend together', 'Lunch', '2')
+
+        with patch('builtins.print'):  # to avoid unwanted prints during the test
+            management.addRecipe(r1)
+            management.addRecipe(r2)
+            management.addRecipe(r3)
+            management.addRecipe(r4)
+
+
+        with patch('builtins.print'):  # to avoid unwanted prints during the test
+            management.editRecipe('70')
+            management.editRecipe('71')
+            management.editRecipe('72')
+            management.editRecipe('33')
+
+
+
+        allrecipes = management.collection.get()
+        final_data = [doc.to_dict() for doc in allrecipes]
+
+        recipe_dic1 ={"id":'70',"name": "cake", "ingredient": 'honey,milk', "instruction": '', 'category': '', 'rating': '4'}
+        recipe_dic2 ={"id":'71',"name": "cake", "ingredient": '4', "instruction": '3', 'category': '3', 'rating': '4'}
+        recipe_dic3 ={"id":'72',"name": "cake", "ingredient": '4', "instruction": '3', 'category': 'dessert', 'rating': '4'}
+        recipe_dic4 ={"id":'33',"name": "cake", "ingredient": '4', "instruction": '3', 'category': '-5', 'rating': '4'}
+
+        self.assertNotIn(recipe_dic1, final_data)
+        self.assertNotIn(recipe_dic2, final_data)
+        self.assertNotIn(recipe_dic3, final_data)
+        self.assertNotIn(recipe_dic4, final_data)
 
 
 if __name__ =='__main__':
