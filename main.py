@@ -324,9 +324,10 @@ class RecipeManagmentSystem:
         
         elif option == '3':
             ins = input('Enter recipe instructions: ')
-            while ins == '' or ins.isdigit():
+            if ins == '' or ins.isdigit() or ins[0]=='-':
                 print("Invalid input. Please enter recipe instructions.")
-                ins = input('Enter recipe instructions: ')
+                # ins = input('Enter recipe instructions: ')
+                return
             verification= input("Are you sure you want to update the record (Type yes or no)?")
             if verification.lower()=='yes':
                 self.collection.document(id).update({'instruction':ins})
