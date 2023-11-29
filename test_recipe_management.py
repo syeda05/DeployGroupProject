@@ -14,8 +14,9 @@ class TestRecipeManagementSystem(unittest.TestCase):
         management = main.RecipeManagmentSystem()
         recipe = main.Recipe('13','Smoothie','Avocado, banana, yogurt, tofu, nut butters and chia seeds','Put it all in the blender in the order above. Then blend until it’s as smooth as you like! Pour it in a cup — or a bowl, if you’re a smoothie bowl fan — and slurp it up.','Breakfast','3')
         recipe_dic ={"id":recipe.id,"name": recipe.recipeName, "ingredient": recipe.ingredients, "instruction": recipe.instructions, 'category': recipe.category, 'rating': recipe.rating}
-
-        management.addRecipe(recipe)
+        
+        with patch('builtins.print'):
+            management.addRecipe(recipe)
 
         allrecipes = management.collection.get()
         final_data = [doc.to_dict() for doc in allrecipes]
@@ -38,7 +39,6 @@ class TestRecipeManagementSystem(unittest.TestCase):
             management.addRecipe(recipe2)
             management.addRecipe(recipe3)
             management.addRecipe(recipe4)
-
 
         allrecipes = management.collection.get()
         final_data = [doc.to_dict() for doc in allrecipes]
@@ -94,14 +94,12 @@ class TestRecipeManagementSystem(unittest.TestCase):
         recipe4 = main.Recipe('66','Chicken Fajita Tacos','boneless chicken, vegetable oil, bell pepper, sour cream',"1",'Dinner','4')
         recipe5 = main.Recipe('66','Chicken Fajita Tacos','boneless chicken, vegetable oil, bell pepper, sour cream',"-1",'Dinner','4')
 
-
         recipe_dic ={"id":recipe1.id,"name": recipe1.recipeName, "ingredient": recipe1.ingredients, "instruction": recipe1.instructions, 'category': recipe1.category, 'rating': recipe1.rating}
         recipe_dic1 ={"id":recipe1.id,"name": recipe1.recipeName, "ingredient": recipe1.ingredients, "instruction": recipe1.instructions, 'category': recipe1.category, 'rating': recipe1.rating}
         recipe_dic2 ={"id":recipe2.id,"name": recipe2.recipeName, "ingredient": recipe2.ingredients, "instruction": recipe2.instructions, 'category': recipe2.category, 'rating': recipe2.rating}
         recipe_dic3 ={"id":recipe3.id,"name": recipe3.recipeName, "ingredient": recipe3.ingredients, "instruction": recipe3.instructions, 'category': recipe3.category, 'rating': recipe3.rating}
         recipe_dic4 ={"id":recipe4.id,"name": recipe4.recipeName, "ingredient": recipe4.ingredients, "instruction": recipe4.instructions, 'category': recipe4.category, 'rating': recipe4.rating}
         recipe_dic5 ={"id":recipe5.id,"name": recipe5.recipeName, "ingredient": recipe5.ingredients, "instruction": recipe5.instructions, 'category': recipe5.category, 'rating': recipe5.rating}
-
 
         with patch('builtins.print'):
             management.addRecipe(recipe)
@@ -128,11 +126,9 @@ class TestRecipeManagementSystem(unittest.TestCase):
                 buffer = StringIO()
                 sys.stdout = buffer
                 management.view_recipe()
-                output = buffer.getvalue() #rescipes displayed to user on choosing 2-Breakfast (should be breakfast only)
-                sys.stdout = sys.__stdout__
+                output = buffer.getvalue() #recipes displayed to user on choosing 2-Breakfast (should be breakfast only)
+                sys.stdout = sys.__stdout__  
         
-        
-        #print("=======",print_output)
         test_input1="category: Lunch"
         self.assertNotIn(test_input1,output,"present")
         test_input2="category: Dinner"
@@ -148,17 +144,15 @@ class TestRecipeManagementSystem(unittest.TestCase):
                 buffer = StringIO()
                 sys.stdout = buffer
                 management.view_recipe()
-                output = buffer.getvalue() #rescipes displayed to user on choosing 2-Breakfast (should be breakfast only)
+                output = buffer.getvalue() #recipes displayed to user on choosing 2-Breakfast (should be breakfast only)
                 sys.stdout = sys.__stdout__
         
-        
-        #print("=======",print_output)
         test_input1="category: Lunch"
-        self.assertIn(test_input1,output,"present")
+        self.assertIn(test_input1,output,"not present")
         test_input2="category: Dinner"
         self.assertNotIn(test_input2,output,"present")
         test_input3 = 'category: Breakfast'
-        self.assertNotIn(test_input3,output,"not present")
+        self.assertNotIn(test_input3,output,"present")
 
     def test_view_dinner_recipes(self):
         management = main.RecipeManagmentSystem()
@@ -168,18 +162,15 @@ class TestRecipeManagementSystem(unittest.TestCase):
                 buffer = StringIO()
                 sys.stdout = buffer
                 management.view_recipe()
-                output = buffer.getvalue() #rescipes displayed to user on choosing 2-Breakfast (should be breakfast only)
-                sys.stdout = sys.__stdout__
+                output = buffer.getvalue() #recipes displayed to user on choosing 2-Breakfast (should be breakfast only)
+                sys.stdout = sys.__stdout__ 
         
-        
-        #print("=======",print_output)
         test_input1="category: Dinner"
-        self.assertIn(test_input1,output,"present")
+        self.assertIn(test_input1,output,"not present")
         test_input2="category: Lunch"
         self.assertNotIn(test_input2,output,"present")
         test_input3 = 'category: Breakfast'
-        self.assertNotIn(test_input3,output,"not present")
-
+        self.assertNotIn(test_input3,output,"present")
     
     def test_delete_recipeID_not_present(self):
         management = main.RecipeManagmentSystem()
