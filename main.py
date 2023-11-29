@@ -309,9 +309,11 @@ class RecipeManagmentSystem:
 
         elif option == '2':
             ing = input('Enter recipe ingredients (Separate values by ,): ')
-            while ing == '' or ing.isdigit():
+            if ing == '' or ing.isdigit() or ing[0]=='-':
                 print("Invalid input. Please enter ingredients.")
-                ing = input('Enter recipe ingredients (Separate values by ,): ')
+                # ing = input('Enter recipe ingredients (Separate values by ,): ')
+                return
+                
             ing = ing.split(',')
             verification= input("Are you sure you want to update the record (Type yes or no)?")
             if verification.lower()=='yes':
