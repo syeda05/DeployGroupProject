@@ -78,8 +78,38 @@ class TestRecipeManagementSystem(unittest.TestCase):
        
         self.assertIn(values, output)
 
-       
+    
+    @patch('builtins.input', side_effect=['61','1', '6','62','1','','81','1','-1'])  
+    def test_editRecipe_name(self, mock_editRecipe):
+        management = main.RecipeManagmentSystem()
+        r1=main.Recipe("61", "Ice Cream", 'milk, sugar', 'blend together','Lunch', '4')
+        r2=main.Recipe("62", "Ice Cream", 'milk, sugar', 'blend together','Lunch', '4')
+        r3=main.Recipe("81", "Ice Cream", 'milk, sugar', 'blend together','Lunch', '4')
 
+        with patch('builtins.print'):  # to avoid unwanted prints during the test
+            management.addRecipe(r1)
+            management.addRecipe(r2)
+            management.addRecipe(r3)
+
+
+        with patch('builtins.print'):  # to avoid unwanted prints during the test
+            management.editRecipe('61')
+            management.editRecipe('62') 
+            management.editRecipe('81') 
+ 
+
+        allrecipes = management.collection.get()
+        final_data = [doc.to_dict() for doc in allrecipes]
+
+        recipe_dic1 ={"id":'61',"name": "6", "ingredient": 'milk, sugar', "instruction": 'blend together', 'category': 'Lunch', 'rating': '4'}
+        recipe_dic2 ={"id":'62',"name": "", "ingredient": 'milk, sugar', "instruction": 'blend together', 'category': 'Lunch', 'rating': '4'}
+        recipe_dic3 ={"id":'81',"name": "-1", "ingredient": 'milk, sugar', "instruction": 'blend together', 'category': 'Lunch', 'rating': '4'}
+
+        self.assertNotIn(recipe_dic1, final_data)
+        self.assertNotIn(recipe_dic2, final_data)
+        self.assertNotIn(recipe_dic3, final_data)
+
+  
 
 
 if __name__ =='__main__':

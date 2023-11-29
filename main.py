@@ -348,9 +348,9 @@ class RecipeManagmentSystem:
         
         elif option == '5':
             rating = input('Enter recipe rating: ')
-            while not rating.isdigit() or (int(rating)<1 or int(rating)>5) :
+            if not rating.isdigit() or (int(rating)<1 or int(rating)>5) or rating=='' :
                 print("Invalid input. Please enter recipe rating.")
-                rating = input('Enter recipe rating: ')
+                return
             verification= input("Are you sure you want to update the record (Type yes or no)?")
             if verification.lower()=='yes':
                 self.collection.document(id).update({'rating':rating})
