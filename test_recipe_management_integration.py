@@ -19,7 +19,7 @@ class TestRecipeManagementSystem(unittest.TestCase):
             "id": '12',
             "name": "Soup",
             "ingredient": 'potato, salt, pepper',
-            "instructions": 'gather, cut, cook',
+            "instructions":'gather, cut, cook',
             'category': 'Lunch',
             'rating': '5'
         }
