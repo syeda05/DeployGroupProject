@@ -220,7 +220,7 @@ class RecipeManagmentSystem:
         if recipe.recipeName == '' or recipe.recipeName.isdigit() or recipe.recipeName[0]=='-' :
             print("Invalid input. Please enter a recipe name.")
             return
-        if recipe.ingredients == '' or recipe.ingredients.isdigit() or recipe.ingredients[0]=='-':
+        if recipe.ingredients == '':
             print("Invalid input. Please enter ingredients.")
             return 
         if recipe.instructions == '' or recipe.instructions.isdigit() or recipe.instructions[0]=='-':
